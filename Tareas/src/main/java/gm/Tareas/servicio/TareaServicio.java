@@ -3,9 +3,10 @@ package gm.Tareas.servicio;
 import gm.Tareas.modelo.Tarea;
 import gm.Tareas.repositorio.TareaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class TareaServicio implements ITareaServicio{
 
     @Autowired
@@ -15,6 +16,13 @@ public class TareaServicio implements ITareaServicio{
     public List<Tarea> listarTarea() {
         return tareaRepositorio.findAll();
     }
+
+
+    @Override
+    public List<Tarea> listarTareas() {
+        return tareaRepositorio.findAll();
+    }
+
 
     @Override
     public Tarea buscarTareaPorId(Integer idTarea) {
