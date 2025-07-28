@@ -50,6 +50,8 @@ public class IndexControlador implements Initializable {
     @FXML
     private TextField estatusTareaTexto;
 
+    private Integer IdTareaInterno;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,22 +83,63 @@ public class IndexControlador implements Initializable {
             return;
         }else{
             var tarea = new Tarea();
-            recolectarInformacionFormulario(tarea);
+            tarea.setIdtarea( null );
+            recolectarInformacionFormulario(tarea, "Tarea Guardada");
+        }
+    }
+
+
+
+    public void cargarTareaFormulario(){
+        var tarea = tareaTabla.getSelectionModel().getSelectedItem();
+        if( tarea != null ){
+            IdTareaInterno = tarea.getIdtarea();
+            nombreTareaTexto.setText(tarea.getNombreTarea());
+            responsableTareaTexto.setText(tarea.getResponsable());
+            estatusTareaTexto.setText(tarea.getEstatus());
         }
     }
 
 
     public void modificarTarea(){
 
+        if(IdTareaInterno == null){
+            mostrarMensaje("Error de validacion", "Debe seleccionar una tarea");
+            return;
+        }else{
+            if(nombreTareaTexto.getText().isEmpty()){
+                mostrarMensaje("Error de validacion", "Debe proporcionar una tarea");
+                nombreTareaTexto.requestFocus();
+                return;
+            }else{
+                var tarea = new Tarea();
+                recolectarInformacionFormulario(tarea, "Tarea Modificada");
+            }
+        }
     }
 
 
     public void eliminarTarea(){
+        var tarea = tareaTabla.getSelectionModel().getSelectedItem();
 
-    }
+        if(tarea == null){
+            mostrarMensaje("Error de validacion", "Debe seleccionar una tarea");
+            return;
+        }else{
+            IdTareaInterno = tarea.getIdtarea();
+            if(nombreTareaTexto.getText().isEmpty()){
+                mostrarMensaje("Error de validacion", "Debe proporcionar una tarea");
+                return;
+            }else{
 
-    public void limpiarTarea(){
+                if(IdTareaInterno != null) tarea.setIdtarea( IdTareaInterno );
+                tareaServicio.eliminarTarea(tarea);
 
+                mostrarMensaje("Informacion", "Tarea Eliminada");
+                LimpiarFormulario();
+                listarTareas();
+            }
+        }
     }
 
 
@@ -110,18 +153,23 @@ public class IndexControlador implements Initializable {
     }
 
 
-    private void recolectarInformacionFormulario(Tarea tarea){
+    private void recolectarInformacionFormulario(Tarea tarea, String mensajeTipo){
+
+
+        if(IdTareaInterno != null) tarea.setIdtarea( IdTareaInterno );
+
         tarea.setNombreTarea( nombreTareaTexto.getText() );
         tarea.setResponsable( responsableTareaTexto.getText() );
         tarea.setEstatus( estatusTareaTexto.getText() );
 
         tareaServicio.guardarTarea(tarea);
-        mostrarMensaje("Informacion", "Tarea Guardada");
+        mostrarMensaje("Informacion", mensajeTipo);
         LimpiarFormulario();
         listarTareas();
     }
 
-    private void LimpiarFormulario(){
+    public void LimpiarFormulario(){
+        IdTareaInterno = null;
         nombreTareaTexto.clear();
         responsableTareaTexto.clear();
         estatusTareaTexto.clear();
