@@ -1,6 +1,6 @@
-<%@ include file="empleados/cabecero.jsp"%>
+<%@ include file="comunes/cabecero.jsp"%>
 
-<%@ include file="empleados/navegacion.jsp"%>
+<%@ include file="comunes/navegacion.jsp"%>
 
 <div class="container"   >
 
@@ -10,18 +10,18 @@
 
 
     <div class="container" >
-        <form>
+        <form action="/empleados/agregar" modelAttribute="empleadoForma" method="post">
             <div class="mb-3">
-                <label for="nombre" class="form-label">Email address</label>
-                <input type="text" class="form-control" id="nombre" required="true">
+                <label for="nombreEmpleado" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombreEmpleado" name="nombreEmpleado" required="true">
             </div>
             <div class="mb-3">
                 <label for="departamento" class="form-label">Departamento</label>
-                <input type="text" class="form-control" id="departamento">
+                <input type="text" class="form-control" id="departamento" name="departamento">
             </div>
             <div class="mb-3">
-                <label for="salario" class="form-label">Salario</label>
-                <input type="number" step="any" class="form-control" id="salario">
+                <label for="sueldo" class="form-label">Sueldo</label>
+                <input type="number" step="any" class="form-control"  id="sueldo" name="sueldo">
             </div>
             <div class="text-center" >
                 <button type="submit" class="btn btn-warning sm-3">Agregar</button>
@@ -38,5 +38,5 @@
 
 
 
-<%@ include file="empleados/pie-pagina.jsp"%>
+<%@ include file="comunes/pie-pagina.jsp"%>
 
