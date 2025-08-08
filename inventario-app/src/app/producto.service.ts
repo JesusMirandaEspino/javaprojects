@@ -15,4 +15,16 @@ export class ProductoService {
   obtenerProductoLista(): Observable<Producto[]> {
     return this.clientHttp.get<Producto[]>(this.URL);
   }
+
+  agregarProducto(producto: Producto): Observable<Object> {
+    return this.clientHttp.post(this.URL, producto);
+  }
+
+  obtenerProductoPorId(idProducto: any): Observable<Producto> {
+    return this.clientHttp.get<Producto>(`${this.URL}/${idProducto}`);
+  }
+
+  eliminarProductoPorId(idProducto: any): Observable<Producto> {
+    return this.clientHttp.delete<Producto>(`${this.URL}/${idProducto}`);
+  }
 }

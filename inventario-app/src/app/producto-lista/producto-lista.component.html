@@ -21,8 +21,28 @@
         <td>{{ producto.descripcion }}</td>
         <td>{{ producto.precio }}</td>
         <td>{{ producto.existencia }}</td>
-        <td>mdo</td>
-        <td>mdo</td>
+
+        <td>
+          <div class="text-center">
+            <button
+              class="btn btn-warning"
+              (click)="editarProducto(producto.idProducto)"
+            >
+              Editar
+            </button>
+          </div>
+        </td>
+
+        <td>
+          <div class="text-center">
+            <button
+              class="btn btn-danger"
+              (click)="eliminarProducto(producto.idProducto)"
+            >
+              Eliminar
+            </button>
+          </div>
+        </td>
       </tr>
       }
     </tbody>
