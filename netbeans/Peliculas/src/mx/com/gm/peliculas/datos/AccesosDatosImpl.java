@@ -90,10 +90,22 @@ public class AccesosDatosImpl implements IAccessoDatos{
 
     @Override
     public void crear(String nombreRecurso) throws AccesoDatosEx {
+        File archivo = new File(nombreRecurso);
+        try {
+            var salida = new PrintWriter(new FileWriter(archivo));
+            salida.close();
+            System.out.println("Se ha creado el archivo");
+        } catch (IOException ex) {
+            throw new AccesoDatosEx("Excepcion al buscar peliculas " + ex.getMessage()); 
+        }
     }
 
     @Override
     public void borrar(String nombreRecurso) throws AccesoDatosEx {
+        File archivo = new File(nombreRecurso);
+        if(archivo.exists())
+        archivo.delete();
+        System.out.println("Se ha borrado el archivo");
     }
     
 }
