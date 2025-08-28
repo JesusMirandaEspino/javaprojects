@@ -10,4 +10,13 @@ package mx.com.gm.peliculas.servicio;
  */
 public interface ICatalogoPeliculas {
     
+    String NOMBRE_PELICULA = "peliculas.txt";
+    
+    void agregarPeliculas(String nombre);
+    
+    void listarPeliculas();
+    
+    void buscarPelicula(String buscar);
+    
+    void iniciarCatalogoPeliculas();
 }

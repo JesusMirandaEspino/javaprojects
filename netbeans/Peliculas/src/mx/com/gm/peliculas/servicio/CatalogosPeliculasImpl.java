@@ -67,7 +67,15 @@ public class CatalogosPeliculasImpl implements ICatalogoPeliculas{
 
     @Override
     public void iniciarCatalogoPeliculas() {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        try {
+            if( this.datos.existe(NOMBRE_PELICULA) ){
+                this.datos.borrar(NOMBRE_PELICULA);
+                this.datos.crear(NOMBRE_PELICULA);
+            }
+        } catch (AccesoDatosEx ex) {
+            System.out.println("Error de acceso a datos");
+            ex.printStackTrace(System.out);       
+        }
     }
     
 }
