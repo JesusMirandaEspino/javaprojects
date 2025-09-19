@@ -15,5 +15,7 @@
         <h1>Ejemplo JSTL</h1>
         <br/>
         <<a href="jstlCore.jsp?opcion=1">Ir a variables</a>
+
+        
     </body>
 </html>

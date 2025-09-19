@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>Bolsa de Trabajo JSF</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:form >
+            <h:messages globalOnly="true" />
+            <table>
+                    <tr>
+                        <td>
+                            <h:outputLabel for="nombre" value="#{msgs['VacanteForm.nombre']}:"></h:outputLabel>
+                        </td>
+                        <td>
+                            <h:inputText id="nombre" value="#{candidato.nombre}"></h:inputText>
+                        </td>
+                        <td>
+                            <h:message for="nombre"></h:message>
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            <h:outputLabel for="apellido" value="#{msgs['VacanteForm.apellido']}:"></h:outputLabel>
+                        </td>
+                        <td>
+                            <h:inputText id="apellido" value="#{candidato.apellido}"></h:inputText>
+                        </td>
+                        <td>
+                            <h:message for="apellido"></h:message>
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            <h:outputLabel for="salarioDeseado" value="#{msgs['VacanteForm.salarioDeseado']}:"></h:outputLabel>
+                        </td>
+                        <td>
+                            <h:inputText id="salarioDeseado" value="#{candidato.salarioDeseado}">
+                                <f:validateLongRange minimum="500"/>
+                            </h:inputText>
+                            
+                        </td>
+                        <td>
+                            <h:message for="salarioDeseado"></h:message>
+                        </td>
+                    </tr>               
+                    <tr>
+                        <td>
+                            <h:outputLabel for="fechaNacimiento" value="#{msgs['VacanteForm.fechaNacimiento']}:"></h:outputLabel>
+                        </td>
+                        <td>
+                            <h:inputText id="fechaNacimiento" value="#{candidato.fechaNacimiento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:inputText>
+                            
+                        </td>
+                        <td>
+                            <h:message for="fechaNacimiento"></h:message>
+                        </td>
+                    </tr>
+                
+                
+                    <tr>
+                        <td>
+                            <h:outputLabel value="Resultado:"></h:outputLabel>
+                        </td>
+                        <td>
+                             <h:outputLabel value="#{candidato.nombre}"></h:outputLabel>
+                        </td>
+                    </tr>
+            </table>
+            <h:commandButton action="#{VacanteForm.enviar}" value="Enviar"/>
+         </h:form>
+    </h:body>
+</html>
