@@ -4,8 +4,10 @@
  */
 package test;
 
+import datos.ConexionJDBC;
 import datos.PersonsJDBC;
 import domain.Persona;
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -14,17 +16,43 @@ import java.util.List;
  */
 public class ManejoPersonas {
     public static void main(String[] args) {
-        PersonsJDBC personaJDBC = new PersonsJDBC();
-        List<Persona> listaPersonas = personaJDBC.seleccionar();
+            Connection conexion = null;
         
-           listaPersonas.forEach( persona -> {
+        try {
+            conexion = ConexionJDBC.getConexion();
+            
+            if(conexion.getAutoCommit() ){
+                conexion.setAutoCommit(false);
+            }
+            
+            PersonsJDBC personaJDBC = new PersonsJDBC(conexion);
+            
+            
+            List<Persona> listaPersonas = personaJDBC.seleccionar();
+        
+            listaPersonas.forEach( persona -> {
                System.out.println("IdPersona: " + persona.getIdPersona());
                System.out.println("Nombre: " + persona.getNombre());
                System.out.println("Apellido: " + persona.getApellido());
                System.out.println("Email: " + persona.getEmail());
                System.out.println("Telefono: " + persona.getTelefono());
                System.out.println("----------------------------------------------------------------------------------");
-           });
+            });
+            
+            
+            conexion.commit();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+                try {
+                    conexion.rollback();
+                } catch (SQLException ex1) {
+                     ex1.printStackTrace(System.out);
+                }
+        }
+        
+        
+
            
            
            //Persona persona1 = new Persona();

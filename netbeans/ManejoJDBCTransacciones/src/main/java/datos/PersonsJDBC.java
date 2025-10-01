@@ -14,13 +14,24 @@ import java.util.List;
  * @author jesus
  */
 public class PersonsJDBC {
+    
+    private Connection conexionTransaccional;
+    
     private static final String SQL_SELECT = "SELECT idPersona, nombre, apellido, email, telefono FROM persona";
     private static final String SQL_INSERT = "INSERT INTO persona(nombre, apellido, email, telefono) VALUES(?,?,?,?)";
     private static final String SQL_UPDATE = "UPDATE persona SET nombre=?, apellido=?, email=?, telefono=? WHERE idPersona=?";
     private static final String SQL_DELETE = "DELETE FROM persona WHERE idPersona=?";
     
+    public PersonsJDBC(){
     
-    public List<Persona> seleccionar(){
+    }
+    
+    
+    public PersonsJDBC(Connection conexionTransaccional){
+        this.conexionTransaccional = conexionTransaccional;
+    }
+    
+    public List<Persona> seleccionar()throws SQLException {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -28,7 +39,7 @@ public class PersonsJDBC {
         List<Persona> personas = new ArrayList<Persona>();
         
         try {
-            con = ConexionJDBC.getConexion();
+            con = this.conexionTransaccional != null ? this.conexionTransaccional : ConexionJDBC.getConexion();
             stmt = con.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             
@@ -48,28 +59,31 @@ public class PersonsJDBC {
                 
                 
                 personas.add(persona);
-            }
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
+            } 
         }finally{
             ConexionJDBC.cerrar(rs);
             ConexionJDBC.cerrar(stmt);
-            ConexionJDBC.cerrar(con);
+            
+            if( this.conexionTransaccional == null ){
+              ConexionJDBC.cerrar(con);
+            }
 
+
+            
+            
         }
         return personas;
     
     }
     
-    public int insertar(Persona persona){
+    public int insertar(Persona persona)throws SQLException{
     
         Connection con = null;
         PreparedStatement stmt = null;
         int rows = 0;
         
         try {
-            con = ConexionJDBC.getConexion();
+            con = this.conexionTransaccional != null ? this.conexionTransaccional : ConexionJDBC.getConexion();
             stmt = con.prepareStatement(SQL_INSERT);
             stmt.setString(1, persona.getNombre());
             stmt.setString(2, persona.getApellido());
@@ -81,12 +95,12 @@ public class PersonsJDBC {
             rows = stmt.executeUpdate();
             
             System.out.println("Registros afectados" + rows);
-        
-        } catch (SQLException ex) {
-            System.getLogger(PersonsJDBC.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+       
         }finally{
             ConexionJDBC.cerrar(stmt);
-            ConexionJDBC.cerrar(con);
+            if( this.conexionTransaccional == null ){
+              ConexionJDBC.cerrar(con);
+            }
         }
         
         return rows;
@@ -95,14 +109,14 @@ public class PersonsJDBC {
     
     
     
-    public int actualizar(Persona persona){
+    public int actualizar(Persona persona)throws SQLException{
         Connection con = null;
         PreparedStatement stmt = null;
         int rows = 0;
         
         
         try {
-            con = ConexionJDBC.getConexion();
+            con = this.conexionTransaccional != null ? this.conexionTransaccional : ConexionJDBC.getConexion();
             stmt = con.prepareStatement(SQL_UPDATE);
             stmt.setString(1, persona.getNombre());
             stmt.setString(2, persona.getApellido());
@@ -115,12 +129,11 @@ public class PersonsJDBC {
             rows = stmt.executeUpdate();
             
             System.out.println("Registros afectados" + rows);
-        
-        } catch (SQLException ex) {
-            System.getLogger(PersonsJDBC.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }finally{
             ConexionJDBC.cerrar(stmt);
-            ConexionJDBC.cerrar(con);
+            if( this.conexionTransaccional == null ){
+              ConexionJDBC.cerrar(con);
+            }
         }
         
         return rows;
@@ -131,14 +144,14 @@ public class PersonsJDBC {
     
     
     
-    public int borrar(Persona persona){
+    public int borrar(Persona persona)throws SQLException{
         Connection con = null;
         PreparedStatement stmt = null;
         int rows = 0;
         
         
         try {
-            con = ConexionJDBC.getConexion();
+            con = this.conexionTransaccional != null ? this.conexionTransaccional : ConexionJDBC.getConexion();
             stmt = con.prepareStatement(SQL_DELETE);
 
             stmt.setInt(1, persona.getIdPersona());
@@ -147,11 +160,11 @@ public class PersonsJDBC {
             rows = stmt.executeUpdate();
             System.out.println("Registros afectados" + rows);
         
-        } catch (SQLException ex) {
-            System.getLogger(PersonsJDBC.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }finally{
             ConexionJDBC.cerrar(stmt);
-            ConexionJDBC.cerrar(con);
+            if( this.conexionTransaccional == null ){
+              ConexionJDBC.cerrar(con);
+            }
         }
         
         return rows;
