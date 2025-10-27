@@ -54,3 +54,14 @@
 /jakarta/sga-jee-web/target/
 /jakarta/sga-jee-web_war/target/
 /jakarta/sga_sga-jee-web_war3/target/
+/netbeans/sumaWS/target/
+/netbeans/ClienteSumaWS/target/
+/netbeans2/sga-jee-web/target/
+/netbeans2/ClienteSgaWs/target/
+/netbeans/ClienteSgaRestWs/target/
+/netbeans2/ClienteEJBSeguridad/target/
+/netbeans2/ClienteSgaRestWs/target/
+/netbeans2/web_ClienteSgaRestWsSecurity/target/
+/netbeans2/web_ClienteSgaWsSecurity/target/
+/netbeans/HibernateEjemplo1/target/
+/netbeans/PersonasWebHibernateJPA/target/
